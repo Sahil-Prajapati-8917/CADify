@@ -56,25 +56,36 @@ export default function Canvas({
 
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-    ctx.fillStyle = '#f0f0f0';
+    ctx.fillStyle = '#171717';
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-    ctx.fillStyle = '#e8e8e8';
+    const gradient1 = ctx.createLinearGradient(0, 0, ORIGINAL_PANEL_WIDTH, 0);
+    gradient1.addColorStop(0, '#1a1a1a');
+    gradient1.addColorStop(1, '#0f0f0f');
+    ctx.fillStyle = gradient1;
     ctx.fillRect(0, 0, ORIGINAL_PANEL_WIDTH, CANVAS_HEIGHT);
-    ctx.fillStyle = '#ffffff';
+
+    const gradient2 = ctx.createLinearGradient(ORIGINAL_PANEL_WIDTH, 0, CANVAS_WIDTH, 0);
+    gradient2.addColorStop(0, '#0f0f0f');
+    gradient2.addColorStop(1, '#1a1a1a');
+    ctx.fillStyle = gradient2;
     ctx.fillRect(ORIGINAL_PANEL_WIDTH, 0, CANVAS_WIDTH - ORIGINAL_PANEL_WIDTH, CANVAS_HEIGHT);
 
-    ctx.strokeStyle = '#cccccc';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#404040';
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(ORIGINAL_PANEL_WIDTH, 0);
     ctx.lineTo(ORIGINAL_PANEL_WIDTH, CANVAS_HEIGHT);
     ctx.stroke();
 
-    ctx.fillStyle = '#333';
-    ctx.font = '12px Arial';
-    ctx.fillText('Original Image', 10, 20);
-    ctx.fillText('Generated Paths', ORIGINAL_PANEL_WIDTH + 10, 20);
+    ctx.fillStyle = '#a3a3a3';
+    ctx.font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillText('Original Image', 16, 28);
+    ctx.fillText('Generated Paths', ORIGINAL_PANEL_WIDTH + 16, 28);
+
+    ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillStyle = '#525252';
+    ctx.fillText('Click to select paths • Double-click to add lines', ORIGINAL_PANEL_WIDTH + 16, 48);
 
     if (showOriginalImage && image && imageLoaded) {
       const imgWidth = ORIGINAL_PANEL_WIDTH - 20;
@@ -88,7 +99,7 @@ export default function Canvas({
     }
 
     if (gridEnabled) {
-      ctx.strokeStyle = '#e0e0e0';
+      ctx.strokeStyle = '#262626';
       ctx.lineWidth = 0.5;
       for (let x = ORIGINAL_PANEL_WIDTH; x <= CANVAS_WIDTH; x += gridSize) {
         ctx.beginPath();
@@ -347,7 +358,7 @@ export default function Canvas({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#f3f4f6'
+      backgroundColor: '#0f0f0f'
     }}>
       <canvas
         ref={canvasRef}
@@ -357,7 +368,8 @@ export default function Canvas({
         onMouseLeave={handleMouseUp}
         onDoubleClick={handleDoubleClick}
         style={{ 
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px #262626',
+          borderRadius: '12px',
           cursor: currentTool === 'add' ? 'crosshair' : 'default'
         }}
       />

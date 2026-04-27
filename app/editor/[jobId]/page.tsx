@@ -35,7 +35,6 @@ export default function EditorPage() {
         setPaths(result.paths);
         setImageDimensions(result.image_width, result.image_height);
         
-        // Construct image URL from backend
         const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
         setImageUrl(`${apiUrl}/uploads/${jobId}`);
         
@@ -95,18 +94,32 @@ export default function EditorPage() {
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundColor: '#0f0f0f' }}>
         <div style={{ 
-          width: '48px', 
-          height: '48px', 
-          border: '4px solid #3b82f6', 
-          borderTopColor: 'transparent', 
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite',
-          marginBottom: '16px',
-        }} />
-        <p style={{ color: '#666' }}>{processingStatus === 'queued' ? 'Waiting in queue...' : 'Processing image...'}</p>
-        <p style={{ color: '#999', fontSize: '14px', marginTop: '8px' }}>This usually takes 10-15 seconds</p>
+          width: '64px', 
+          height: '64px', 
+          position: 'relative',
+          marginBottom: '24px',
+        }}>
+          <div style={{ 
+            position: 'absolute',
+            inset: 0,
+            border: '3px solid #262626', 
+            borderRadius: '50%',
+          }} />
+          <div style={{ 
+            position: 'absolute',
+            inset: 0,
+            border: '3px solid #3b82f6', 
+            borderTopColor: 'transparent', 
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+          }} />
+        </div>
+        <p style={{ color: '#fff', fontSize: '18px', fontWeight: 500, marginBottom: '8px' }}>
+          {processingStatus === 'queued' ? 'Waiting in queue...' : 'Processing your image...'}
+        </p>
+        <p style={{ color: '#525252', fontSize: '14px' }}>This usually takes 10-15 seconds</p>
         <style>{`
           @keyframes spin {
             from { transform: rotate(0deg); }
@@ -119,32 +132,34 @@ export default function EditorPage() {
 
   if (error) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundColor: '#0f0f0f' }}>
         <div style={{ 
-          width: '64px', 
-          height: '64px', 
-          borderRadius: '50%', 
-          backgroundColor: '#fee2e2', 
+          width: '80px', 
+          height: '80px', 
+          borderRadius: '20px', 
+          backgroundColor: 'rgba(239, 68, 68, 0.1)', 
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'center',
-          marginBottom: '16px',
+          marginBottom: '24px',
         }}>
-          <svg style={{ width: '32px', height: '32px', color: '#dc2626' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg style={{ width: '40px', height: '40px', color: '#ef4444' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </div>
-        <p style={{ color: '#dc2626', fontWeight: '500', marginBottom: '8px' }}>Processing Failed</p>
-        <p style={{ color: '#666', marginBottom: '16px' }}>{error}</p>
+        <p style={{ color: '#fff', fontWeight: 600, fontSize: '18px', marginBottom: '8px' }}>Processing Failed</p>
+        <p style={{ color: '#737373', marginBottom: '24px' }}>{error}</p>
         <button
           onClick={handleNewProject}
           style={{
-            padding: '8px 16px',
+            padding: '12px 24px',
             borderRadius: '8px',
             border: 'none',
-            backgroundColor: '#3b82f6',
+            background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
             color: '#fff',
             cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: 500,
           }}
         >
           Try Another Image
@@ -154,35 +169,55 @@ export default function EditorPage() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <header style={{ width: '100%', padding: '12px 16px', borderBottom: '1px solid #e5e5e5', backgroundColor: '#fff', display: 'flex', alignItems: 'center', gap: '16px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: '#0f0f0f' }}>
+      <header style={{ 
+        width: '100%', 
+        padding: '16px 20px', 
+        borderBottom: '1px solid #262626', 
+        backgroundColor: '#171717', 
+        display: 'flex', 
+        alignItems: 'center', 
+        gap: '16px' 
+      }}>
         <button
           onClick={handleNewProject}
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '4px',
-            padding: '8px',
-            border: 'none',
-            backgroundColor: 'transparent',
-            color: '#666',
+            gap: '8px',
+            padding: '10px 16px',
+            border: '1px solid #404040',
+            backgroundColor: '#262626',
+            color: '#a3a3a3',
             cursor: 'pointer',
-            borderRadius: '6px',
+            borderRadius: '8px',
+            fontSize: '14px',
+            fontWeight: 500,
           }}
         >
-          <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg style={{ width: '18px', height: '18px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           Back
         </button>
         <div style={{ flex: 1 }} />
-        <span style={{ fontSize: '14px', color: '#999' }}>Job: {jobId}</span>
+        <div style={{ 
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          padding: '8px 16px',
+          backgroundColor: '#262626',
+          borderRadius: '8px'
+        }}>
+          <div style={{ width: '8px', height: '8px', backgroundColor: '#22c55e', borderRadius: '50%' }} />
+          <span style={{ fontSize: '13px', color: '#a3a3a3' }}>Job: {jobId.slice(0, 8)}...</span>
+        </div>
       </header>
 
       <Toolbar onExportSVG={handleExportSVG} onExportDXF={handleExportDXF} />
 
-      <div style={{ flex: 1, overflow: 'auto', backgroundColor: '#f3f4f6', padding: '16px' }}>
-        <Canvas initialImageUrl={imageUrl || undefined} width={800} height={600} />
+      <div style={{ flex: 1, overflow: 'auto', backgroundColor: '#0f0f0f', padding: '24px' }}>
+        <Canvas initialImageUrl={imageUrl || undefined} width={1200} height={600} />
       </div>
     </div>
   );

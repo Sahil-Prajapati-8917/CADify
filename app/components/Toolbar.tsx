@@ -10,21 +10,18 @@ interface ToolbarProps {
 const tools = [
   { id: 'select', icon: 'cursor', label: 'Select (V)', shortcut: 'V' },
   { id: 'move', icon: 'move', label: 'Move (M)', shortcut: 'M' },
-  { id: 'pan', icon: 'pan', label: 'Pan (H)', shortcut: 'H' },
-  { id: 'delete', icon: 'trash', label: 'Delete (Del)', shortcut: '' },
   { id: 'add', icon: 'plus', label: 'Add Line (L)', shortcut: 'L' },
-  { id: 'draw', icon: 'pencil', label: 'Draw (D)', shortcut: 'D' },
 ] as const;
 
 const colors = [
-  '#1A3C5E', // Dark blue (default)
-  '#000000', // Black
-  '#FF0000', // Red
-  '#00FF00', // Green
-  '#0000FF', // Blue
-  '#FFA500', // Orange
-  '#800080', // Purple
-  '#FFC0CB', // Pink
+  '#1A3C5E',
+  '#000000',
+  '#FF0000',
+  '#00FF00',
+  '#0000FF',
+  '#FFA500',
+  '#800080',
+  '#FFC0CB',
 ];
 
 const widths = [1, 2, 3, 4, 5, 6, 8];
@@ -60,30 +57,30 @@ export function Toolbar({ onExportSVG, onExportDXF }: ToolbarProps) {
       display: 'flex',
       alignItems: 'center',
       gap: '8px',
-      padding: '8px 16px',
-      backgroundColor: '#fff',
-      borderBottom: '1px solid #e5e5e5',
+      padding: '12px 20px',
+      backgroundColor: '#171717',
+      borderBottom: '1px solid #262626',
       flexWrap: 'wrap',
     }}>
-      {/* Tools */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', paddingRight: '12px', borderRight: '1px solid #e5e5e5' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', paddingRight: '16px', borderRight: '1px solid #262626' }}>
         {tools.map((tool) => (
           <button
             key={tool.id}
             onClick={() => setCurrentTool(tool.id as any)}
             title={`${tool.label}${tool.shortcut ? ` (${tool.shortcut})` : ''}`}
             style={{
-              padding: '8px',
-              borderRadius: '6px',
+              padding: '10px',
+              borderRadius: '8px',
               border: 'none',
-              backgroundColor: currentTool === tool.id ? '#3b82f6' : 'transparent',
-              color: currentTool === tool.id ? '#fff' : '#666',
+              backgroundColor: currentTool === tool.id ? 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)' : 'transparent',
+              color: currentTool === tool.id ? '#fff' : '#a3a3a3',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              minWidth: '36px',
-              minHeight: '36px',
+              minWidth: '40px',
+              minHeight: '40px',
+              transition: 'all 0.2s',
             }}
           >
             {tool.id === 'select' && (
@@ -96,61 +93,50 @@ export function Toolbar({ onExportSVG, onExportDXF }: ToolbarProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
               </svg>
             )}
-            {tool.id === 'pan' && (
-              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
-              </svg>
-            )}
-            {tool.id === 'delete' && (
-              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-            )}
             {tool.id === 'add' && (
               <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-            )}
-            {tool.id === 'draw' && (
-              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 15.232l5.536 5.536m-5.536-5.536l-5.536 5.536M4 18l.01.01M9 13l3 3-3 3m-3-3l3-3-3-3" />
               </svg>
             )}
           </button>
         ))}
       </div>
 
-      {/* Color Picker */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', paddingRight: '12px', borderRight: '1px solid #e5e5e5' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingRight: '16px', borderRight: '1px solid #262626' }}>
         {colors.map((color) => (
           <button
             key={color}
             onClick={() => setLineColor(color)}
             title={color}
             style={{
-              width: '24px',
-              height: '24px',
+              width: '28px',
+              height: '28px',
               borderRadius: '50%',
               backgroundColor: color,
-              border: lineColor === color ? '2px solid #3b82f6' : '2px solid transparent',
+              border: lineColor === color ? '2px solid #fff' : '2px solid transparent',
               cursor: 'pointer',
               padding: 0,
+              boxShadow: lineColor === color ? '0 0 0 2px rgba(59, 130, 246, 0.5)' : 'none',
+              transition: 'all 0.2s',
             }}
           />
         ))}
       </div>
 
-      {/* Line Width */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', paddingRight: '12px', borderRight: '1px solid #e5e5e5' }}>
-        <span style={{ fontSize: '12px', color: '#666' }}>Width:</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingRight: '16px', borderRight: '1px solid #262626' }}>
+        <span style={{ fontSize: '12px', color: '#737373' }}>Width:</span>
         <select
           value={lineWidth}
           onChange={(e) => setLineWidth(parseInt(e.target.value))}
           style={{
-            padding: '4px 8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-            fontSize: '12px',
+            padding: '8px 12px',
+            borderRadius: '8px',
+            border: '1px solid #404040',
+            fontSize: '13px',
+            backgroundColor: '#262626',
+            color: '#fff',
+            outline: 'none',
+            cursor: 'pointer',
           }}
         >
           {widths.map((w) => (
@@ -159,16 +145,16 @@ export function Toolbar({ onExportSVG, onExportDXF }: ToolbarProps) {
         </select>
       </div>
 
-      {/* Zoom Controls */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', paddingRight: '12px', borderRight: '1px solid #e5e5e5' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingRight: '16px', borderRight: '1px solid #262626' }}>
         <button
           onClick={() => setZoom(Math.max(25, zoom - 25))}
           title="Zoom Out"
           style={{
-            padding: '6px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-            backgroundColor: '#fff',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #404040',
+            backgroundColor: '#262626',
+            color: '#a3a3a3',
             cursor: 'pointer',
           }}
         >
@@ -176,15 +162,16 @@ export function Toolbar({ onExportSVG, onExportDXF }: ToolbarProps) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
           </svg>
         </button>
-        <span style={{ fontSize: '12px', color: '#666', minWidth: '45px', textAlign: 'center' }}>{zoom}%</span>
+        <span style={{ fontSize: '12px', color: '#a3a3a3', minWidth: '50px', textAlign: 'center' }}>{zoom}%</span>
         <button
           onClick={() => setZoom(Math.min(400, zoom + 25))}
           title="Zoom In"
           style={{
-            padding: '6px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-            backgroundColor: '#fff',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #404040',
+            backgroundColor: '#262626',
+            color: '#a3a3a3',
             cursor: 'pointer',
           }}
         >
@@ -196,10 +183,11 @@ export function Toolbar({ onExportSVG, onExportDXF }: ToolbarProps) {
           onClick={resetZoom}
           title="Reset Zoom"
           style={{
-            padding: '6px 10px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-            backgroundColor: '#fff',
+            padding: '8px 12px',
+            borderRadius: '6px',
+            border: '1px solid #404040',
+            backgroundColor: '#262626',
+            color: '#a3a3a3',
             cursor: 'pointer',
             fontSize: '11px',
           }}
@@ -208,22 +196,21 @@ export function Toolbar({ onExportSVG, onExportDXF }: ToolbarProps) {
         </button>
       </div>
 
-      {/* Undo/Redo */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', paddingRight: '12px', borderRight: '1px solid #e5e5e5' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingRight: '16px', borderRight: '1px solid #262626' }}>
         <button
           onClick={undo}
           disabled={undoStack.length === 0}
           title="Undo (Ctrl+Z)"
           style={{
-            padding: '6px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-            backgroundColor: '#fff',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #404040',
+            backgroundColor: '#262626',
             cursor: undoStack.length === 0 ? 'not-allowed' : 'pointer',
-            opacity: undoStack.length === 0 ? 0.5 : 1,
+            opacity: undoStack.length === 0 ? 0.4 : 1,
           }}
         >
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: '#a3a3a3' }}>
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
           </svg>
         </button>
@@ -232,33 +219,33 @@ export function Toolbar({ onExportSVG, onExportDXF }: ToolbarProps) {
           disabled={redoStack.length === 0}
           title="Redo (Ctrl+Y)"
           style={{
-            padding: '6px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-            backgroundColor: '#fff',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #404040',
+            backgroundColor: '#262626',
             cursor: redoStack.length === 0 ? 'not-allowed' : 'pointer',
-            opacity: redoStack.length === 0 ? 0.5 : 1,
+            opacity: redoStack.length === 0 ? 0.4 : 1,
           }}
         >
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: '#a3a3a3' }}>
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 10h-10a8 8 0 00-8 8v2M21 10l-6 6m6-6l-6 6" />
           </svg>
         </button>
       </div>
 
-      {/* Grid Toggle */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', paddingRight: '12px', borderRight: '1px solid #e5e5e5' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingRight: '16px', borderRight: '1px solid #262626' }}>
         <button
           onClick={toggleGrid}
           title="Toggle Grid"
           style={{
-            padding: '6px 10px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-            backgroundColor: gridEnabled ? '#3b82f6' : '#fff',
-            color: gridEnabled ? '#fff' : '#666',
+            padding: '8px 14px',
+            borderRadius: '6px',
+            border: '1px solid #404040',
+            backgroundColor: gridEnabled ? 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)' : '#262626',
+            color: gridEnabled ? '#fff' : '#a3a3a3',
             cursor: 'pointer',
             fontSize: '12px',
+            fontWeight: 500,
           }}
         >
           Grid
@@ -268,10 +255,13 @@ export function Toolbar({ onExportSVG, onExportDXF }: ToolbarProps) {
             value={gridSize}
             onChange={(e) => setGridSize(parseInt(e.target.value))}
             style={{
-              padding: '4px',
-              borderRadius: '4px',
-              border: '1px solid #ddd',
+              padding: '8px',
+              borderRadius: '6px',
+              border: '1px solid #404040',
               fontSize: '11px',
+              backgroundColor: '#262626',
+              color: '#a3a3a3',
+              outline: 'none',
             }}
           >
             <option value={10}>10px</option>
@@ -281,52 +271,51 @@ export function Toolbar({ onExportSVG, onExportDXF }: ToolbarProps) {
         )}
       </div>
 
-      {/* Show Original Image */}
       <button
         onClick={toggleShowOriginal}
         title="Toggle Original Image"
         style={{
-          padding: '6px 10px',
-          borderRadius: '4px',
-          border: '1px solid #ddd',
-          backgroundColor: showOriginalImage ? '#3b82f6' : '#fff',
-          color: showOriginalImage ? '#fff' : '#666',
+          padding: '8px 14px',
+          borderRadius: '6px',
+          border: '1px solid #404040',
+          backgroundColor: showOriginalImage ? 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)' : '#262626',
+          color: showOriginalImage ? '#fff' : '#a3a3a3',
           cursor: 'pointer',
           fontSize: '12px',
+          fontWeight: 500,
         }}
       >
         Image
       </button>
 
-      {/* Delete Selected */}
       {selectedPathId && currentTool === 'select' && (
         <button
           onClick={() => deletePath(selectedPathId)}
           title="Delete Selected"
           style={{
-            padding: '6px 10px',
-            borderRadius: '4px',
-            border: '1px solid #dc2626',
+            padding: '8px 14px',
+            borderRadius: '6px',
+            border: 'none',
             backgroundColor: '#dc2626',
             color: '#fff',
             cursor: 'pointer',
             fontSize: '12px',
+            fontWeight: 500,
           }}
         >
           Delete
         </button>
       )}
 
-      {/* Clear Canvas */}
       <button
         onClick={clearCanvas}
         title="Clear All"
         style={{
-          padding: '6px 10px',
-          borderRadius: '4px',
-          border: '1px solid #666',
-          backgroundColor: '#fff',
-          color: '#666',
+          padding: '8px 14px',
+          borderRadius: '6px',
+          border: '1px solid #404040',
+          backgroundColor: 'transparent',
+          color: '#a3a3a3',
           cursor: 'pointer',
           fontSize: '12px',
         }}
@@ -334,25 +323,24 @@ export function Toolbar({ onExportSVG, onExportDXF }: ToolbarProps) {
         Clear
       </button>
 
-      {/* Spacer */}
       <div style={{ flex: 1 }} />
 
-      {/* Export Buttons */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <button
           onClick={onExportSVG}
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            border: '1px solid #ddd',
-            backgroundColor: '#fff',
-            color: '#333',
+            gap: '8px',
+            padding: '10px 20px',
+            borderRadius: '8px',
+            border: '1px solid #404040',
+            backgroundColor: '#262626',
+            color: '#fff',
             cursor: 'pointer',
             fontSize: '13px',
-            fontWeight: '500',
+            fontWeight: 500,
+            transition: 'all 0.2s',
           }}
         >
           <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -365,15 +353,17 @@ export function Toolbar({ onExportSVG, onExportDXF }: ToolbarProps) {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
-            padding: '8px 16px',
-            borderRadius: '6px',
+            gap: '8px',
+            padding: '10px 20px',
+            borderRadius: '8px',
             border: 'none',
-            backgroundColor: '#3b82f6',
+            background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
             color: '#fff',
             cursor: 'pointer',
             fontSize: '13px',
-            fontWeight: '500',
+            fontWeight: 500,
+            boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+            transition: 'all 0.2s',
           }}
         >
           <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
