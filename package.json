@@ -9,12 +9,18 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.100.1",
+    "axios": "^1.15.2",
+    "fabric": "^5.5.2",
     "next": "16.2.4",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-dropzone": "^15.0.0",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/fabric": "^5.3.11",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
